@@ -69,7 +69,7 @@ const loginUser = async (req, res) => {
     });
     res.json({
       message: `Welcome ${userExist.firstName}`,
-      userExist,
+      user: userExist,
       token,
     });
   } catch (error) {
