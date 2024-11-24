@@ -3,12 +3,12 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require('cors');
-const port = process.env.PORT || 5501;
+const port = process.env.PORT || 5500;
 const DB_CONNECTION = process.env.DB_CONNECTION;
 const Articleroutes = require("./routes/Article");
 const Usersroutes = require("./routes/Users");
-const Commanderouetes= require("./routes/Commande");
 const categorieroutes=require("./routes/Categorie")
+const ordersRouter=require("./routes/Orders")
 const app = express();
 app.use(cors({ credentials: true, origin: [ process.env.APP_URL ] }));
 // parse json data (req.body)
@@ -20,9 +20,8 @@ app.get("/", (req, res) => {
 
 app.use("/articles", Articleroutes);
 app.use("/users", Usersroutes);
-app.use("/commandes",Commanderouetes);
 app.use("/categories",categorieroutes)
-
+app.use('/orders', ordersRouter);
 mongoose
   .connect(DB_CONNECTION)
   .then(() => {

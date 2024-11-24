@@ -19,9 +19,18 @@ const registerValidator = Joi.object({
   password: Joi.string().required().min(4),
 });
 
+const orderItemValidator = Joi.object({
+  product: Joi.string().required(),
+  quantity: Joi.number().integer().min(1).required()
+});
+
+const orderValidator = Joi.object({
+  items: Joi.array().items(orderItemValidator).min(1).required()
+});
+
 const loginValidator = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required().min(4),
 });
 
-module.exports = { ArticleValidator, CategorieValidator, registerValidator, loginValidator };
+module.exports = { ArticleValidator, CategorieValidator, registerValidator, loginValidator, orderValidator };

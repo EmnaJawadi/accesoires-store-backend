@@ -1,3 +1,4 @@
+const Article = require('../Models/Article');
 const Categorie = require('../Models/Categorie');
 const { CategorieValidator } = require("../utilities/validators");
 
@@ -74,6 +75,10 @@ exports.updateCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   try {
     const itemToDeleteId = req.params.id
+    const count = await Article.countDocuments({categorie: itemToDeleteId})
+    if (count > 0) {
+        return res.status(403).json({error: "Can't delete a category that contains products."})
+    }
     const deletedCategory = await Categorie.findByIdAndDelete(itemToDeleteId);
 
     if (!deletedCategory) {
